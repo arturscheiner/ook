@@ -144,14 +144,5 @@ func init_strap() {
 
 	afero.WriteFile(appfs, "Vagrantfile", []byte(string(vagrantfile)), 0644)
 
-	//create_config_env(appfs)
 	ook.createFiles(appfs)
 }
-
-//func create_config_env(fs afero.Fs, ookdir string) {
-//	dat, err := os.ReadFile(userdir + "/.ook/kvlab.conf.rb")
-//	check(err)
-//
-//	afero.WriteFile(fs, ".ook/config.env", []byte(string(vagrantfile)), 0644)
-//
-//}
