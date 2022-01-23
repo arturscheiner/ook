@@ -23,6 +23,7 @@ type OokHome struct {
 	worker_sh  string
 	common_sh  string
 	confrb     string
+	labrb      string
 }
 
 type OokLab struct {
@@ -47,7 +48,8 @@ func (Ook *OokDir) define() interface{} {
 	Ook.home.sh = Ook.home.root + "/lib/sh"
 	Ook.home.rb = Ook.home.root + "/lib/rb"
 	Ook.home.vagranfile = Ook.home.root + "/Vagrantfile"
-	Ook.home.confrb = Ook.home.root + "/kvlab.conf.rb"
+	Ook.home.confrb = Ook.home.root + "/conf.rb"
+	Ook.home.labrb = Ook.home.root + "/lib/rb/lab.rb"
 	Ook.home.master_sh = Ook.home.sh + "/master.sh"
 	Ook.home.worker_sh = Ook.home.sh + "/worker.sh"
 	Ook.home.scaler_sh = Ook.home.sh + "/scaler.sh"
@@ -127,8 +129,8 @@ func init_strap() {
 	common_sh, err := os.ReadFile(ook.home.common_sh)
 	check(err)
 
-	vagrantfile := strings.Replace(string(dat), "kvlab.conf.rb", ook.home.root+"/kvlab.conf.rb", 5)
-	vagrantfile = strings.Replace(string(vagrantfile), "lib/rb/kvlab.rb", ook.home.rb+"/kvlab.rb", 5)
+	vagrantfile := strings.Replace(string(dat), "conf.rb", ook.home.confrb, 5)
+	vagrantfile = strings.Replace(string(vagrantfile), "lab.rb", ook.home.labrb, 5)
 
 	scaler_sh_enc := base64.StdEncoding.EncodeToString([]byte(scaler_sh))
 	master_sh_enc := base64.StdEncoding.EncodeToString([]byte(master_sh))
