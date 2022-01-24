@@ -23,6 +23,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		bar := progressbar.DefaultBytes(-1, "Executing")
+		bar.Add(1)
 		//go down(c)
 		//go koo.Bar(-1, "executing")
 		down()
