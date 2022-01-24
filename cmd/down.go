@@ -24,7 +24,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		c := make(chan bool)
-
+		go koo.Bar(-1, "executing", c)
 		down(c)
 	},
 }
@@ -44,7 +44,7 @@ func init() {
 }
 
 func down(c chan bool) {
-	koo.Bar(-1, "executing", c)
+
 	//cmd.Stdout = os.Stdout
 	time.Sleep(1000 * time.Millisecond)
 	//cmd := exec.Command("vagrant", "halt")
