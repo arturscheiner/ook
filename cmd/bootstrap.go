@@ -27,8 +27,7 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		rstatus, _ := cmd.Flags().GetBool("redo")
-		if rstatus { // if status is true, call addFloat
-
+		if rstatus {
 			del_ook()
 			get_ook()
 		} else {
