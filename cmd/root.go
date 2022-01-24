@@ -46,8 +46,8 @@ func init() {
 	ook.Define()
 
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
-	log.Info().Msg("ook version " + Version)
-	log.Info().Msg(".ook version " + ook.GetVersion())
+	log.Info().Msg("ook go build " + Version)
+	log.Info().Msg("ook rb build " + ook.GetVersion())
 
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
