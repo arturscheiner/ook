@@ -32,11 +32,6 @@ func Bar(len int64, desc string, c chan string) {
 		if ok {
 			bar.Describe(<-c)
 			bar.Finish()
-		} else {
-			for i := 0; i < 1000; i++ {
-				bar.Add(1)
-				time.Sleep(40 * time.Millisecond)
-			}
 		}
 	default:
 		for i := 0; i < 1000; i++ {
