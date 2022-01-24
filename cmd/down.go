@@ -44,7 +44,7 @@ func init() {
 }
 
 func down(c chan bool) {
-	go koo.Bar(-1, "executing", c)
+	koo.Bar(-1, "executing", c)
 	//cmd.Stdout = os.Stdout
 	time.Sleep(1000 * time.Millisecond)
 	//cmd := exec.Command("vagrant", "halt")
