@@ -44,7 +44,7 @@ func init() {
 }
 
 func down() {
-	s := spinner.New(spinner.CharSets[2], 10000*time.Millisecond)
+	s := spinner.New(spinner.CharSets[2], 100*time.Millisecond)
 	s.Suffix = " This may take some time..."
 	s.Start()
 
