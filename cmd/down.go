@@ -5,6 +5,7 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
 	"ook/koo"
 	"time"
 
@@ -45,7 +46,7 @@ func init() {
 func down(c chan string) {
 
 	//cmd.Stdout = os.Stdout
-	time.Sleep(1000 * time.Millisecond)
+	time.Sleep(100 * time.Millisecond)
 	//cmd := exec.Command("vagrant", "halt")
 	//s := spinner.StartNew("This may take some time...")
 	//cmd.Stderr = os.Stderr
@@ -55,5 +56,6 @@ func down(c chan string) {
 	//}
 	//s.Stop()
 	c <- "done!"
+	fmt.Println(c)
 	//fmt.Println("Your ook lab is down!")
 }
