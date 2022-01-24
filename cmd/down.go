@@ -5,7 +5,6 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
 	"ook/koo"
 	"time"
 
@@ -55,7 +54,7 @@ func down(c chan string) {
 	//	log.Fatalf("cmd.Run() failed with %s\n", err)
 	//}
 	//s.Stop()
-	c <- "done!"
-	fmt.Println(c)
+	c <- "Your ook lab is down!"
+	//fmt.Println(c)
 	//fmt.Println("Your ook lab is down!")
 }
