@@ -36,6 +36,7 @@ func Bar(len int64, desc string, c chan string) {
 			bar.Add(1)
 			time.Sleep(40 * time.Millisecond)
 		}
+		bar.Finish()
 
 	}
 }
