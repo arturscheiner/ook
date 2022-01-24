@@ -30,9 +30,8 @@ func Bar(len int64, desc string, c chan bool) {
 	for i := 0; i < 100; i++ {
 		bar.Add(1)
 		time.Sleep(40 * time.Millisecond)
-		fmt.Println(<-c)
+		fmt.Println("Data in channel is: ", <-c)
 	}
-	<-c
 }
 
 func OpBar(fn func()) {
