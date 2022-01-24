@@ -7,7 +7,7 @@ package cmd
 import (
 	"time"
 
-	"github.com/schollz/progressbar/v3"
+	"github.com/briandowns/spinner"
 	"github.com/spf13/cobra"
 )
 
@@ -22,18 +22,6 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		go func() {
-			bar := progressbar.Default(-1)
-			for i := 0; i < 1000; i++ {
-				bar.Add(1)
-				time.Sleep(10 * time.Millisecond)
-			}
-			bar.Describe("Your ook lab is down!")
-			bar.Finish()
-		}()
-
-		//go down(c)
-		//go koo.Bar(-1, "executing")
 		down()
 	},
 }
@@ -53,6 +41,8 @@ func init() {
 }
 
 func down() {
+	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
+	s.Start()
 
 	//cmd.Stdout = os.Stdout
 	time.Sleep(1000 * time.Millisecond)
@@ -67,4 +57,5 @@ func down() {
 	//c <- "Your ook lab is down!"
 	//fmt.Println(c)
 	//fmt.Println("Your ook lab is down!")
+	s.Stop()
 }
