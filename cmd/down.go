@@ -41,7 +41,7 @@ func init() {
 }
 
 func down() {
-	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond)
+	s := spinner.New(spinner.CharSets[2], 10000*time.Millisecond)
 	s.Start()
 
 	//cmd.Stdout = os.Stdout
