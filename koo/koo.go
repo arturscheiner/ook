@@ -28,19 +28,16 @@ func CheckErr(e error) {
 func Bar(len int64, desc string, c chan string) {
 	bar := progressbar.DefaultBytes(len, desc)
 	select {
-	case _, ok := <-c:
-		if !ok {
-			for i := 0; i < 1000; i++ {
-				bar.Add(1)
-				time.Sleep(40 * time.Millisecond)
-			}
-
-		}
-	default:
-		bar.Describe(<-c)
+	case msg := <-c:
+		bar.Describe(msg)
 		bar.Finish()
-	}
+	default:
+		for i := 0; i < 1000; i++ {
+			bar.Add(1)
+			time.Sleep(40 * time.Millisecond)
+		}
 
+	}
 }
 
 func OpBar(fn func()) {
