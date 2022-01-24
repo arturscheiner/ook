@@ -25,8 +25,16 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		get_ook()
-		check_dependencies()
+
+		rstatus, _ := cmd.Flags().GetBool("redo")
+		if rstatus { // if status is true, call addFloat
+			del_ook()
+			get_ook()
+		} else {
+			get_ook()
+			check_dependencies()
+		}
+
 	},
 }
 
@@ -41,7 +49,18 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// bootstrapCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	bootstrapCmd.Flags().BoolP("redo", "r", false, "Re-bootstrap the ook needed environment")
+}
+func del_ook() {
+	var AppFs = afero.NewOsFs()
+
+	userdir, err := os.UserHomeDir()
+	koo.CheckErr(err)
+
+	target_dir := userdir + "/.ook"
+
+	err = AppFs.RemoveAll(target_dir)
+	koo.CheckErr(err)
 }
 
 func get_ook() {
