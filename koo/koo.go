@@ -75,7 +75,7 @@ func OpBar(fn func()) {
 	fmt.Println("\n ======= progress bar completed ==========\n")
 }
 
-func OokSsh(user string, password string, server string, command string, c chan string) {
+func OokSsh(user string, password string, server string, command string) {
 	// Start new ssh connection with private key.
 	auth := goph.Password(password)
 
@@ -95,7 +95,6 @@ func OokSsh(user string, password string, server string, command string, c chan 
 	}
 
 	// Get your output as []byte.
-	c <- "done!"
 	fmt.Println(string(out))
 
 }

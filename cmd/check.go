@@ -63,11 +63,11 @@ func check_it() {
 	//io.Copy(io.MultiWriter(f, os.Stdout), stdout)
 	//cmd.Wait()
 	//ookSsh("vagrant", "vagrant", "10.8.8.10", "/bin/bash")
-	c := make(chan string)
+	//c := make(chan string)
 
-	go koo.Bar(-1, "executing", c)
+	//go koo.Bar(-1, "executing")
 
-	koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'", c)
+	koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'")
 	//
 	//
 	//s.Stop()
