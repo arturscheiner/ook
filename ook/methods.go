@@ -18,7 +18,7 @@ func (Ook *OokDir) Define() interface{} {
 	Ook.Home.Vagranfile = Ook.Home.Root + "/Vagrantfile"
 	Ook.Home.Confrb = Ook.Home.Root + "/conf.rb"
 	Ook.Home.Labrb = Ook.Home.Root + "/lib/rb/Lab.rb"
-	Ook.Home.Master_sh = Ook.Home.Sh + "/saster.sh"
+	Ook.Home.Master_sh = Ook.Home.Sh + "/master.sh"
 	Ook.Home.Worker_sh = Ook.Home.Sh + "/worker.sh"
 	Ook.Home.Scaler_sh = Ook.Home.Sh + "/scaler.sh"
 	Ook.Home.Common_sh = Ook.Home.Sh + "/common.sh"
