@@ -23,8 +23,8 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		c := make(chan string)
-		go koo.Bar(-1, "executing", c)
-		down(c)
+		go down(c)
+		koo.Bar(-1, "executing", c)
 	},
 }
 
