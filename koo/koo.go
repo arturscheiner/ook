@@ -6,9 +6,11 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"time"
 
 	"github.com/janeczku/go-spinner"
 	"github.com/melbahja/goph"
+	"github.com/schollz/progressbar/v3"
 )
 
 func CommandExists(cmd string) bool {
@@ -19,6 +21,14 @@ func CommandExists(cmd string) bool {
 func CheckErr(e error) {
 	if e != nil {
 		panic(e)
+	}
+}
+
+func Bar() {
+	bar := progressbar.Default(100)
+	for i := 0; i < 100; i++ {
+		bar.Add(1)
+		time.Sleep(40 * time.Millisecond)
 	}
 }
 
