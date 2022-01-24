@@ -6,10 +6,8 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"ook/koo"
-	"os"
-	"os/exec"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -48,13 +46,14 @@ func init() {
 func down(c chan bool) {
 	go koo.Bar(-1, "executing", c)
 	//cmd.Stdout = os.Stdout
-	cmd := exec.Command("vagrant", "halt")
+	time.Sleep(40 * time.Millisecond)
+	//cmd := exec.Command("vagrant", "halt")
 	//s := spinner.StartNew("This may take some time...")
-	cmd.Stderr = os.Stderr
-	err := cmd.Run()
-	if err != nil {
-		log.Fatalf("cmd.Run() failed with %s\n", err)
-	}
+	//cmd.Stderr = os.Stderr
+	//err := cmd.Run()
+	//if err != nil {
+	//	log.Fatalf("cmd.Run() failed with %s\n", err)
+	//}
 	//s.Stop()
 	c <- true
 	fmt.Println("Your ook lab is down!")
