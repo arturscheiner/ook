@@ -11,7 +11,6 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/janeczku/go-spinner"
 	"github.com/spf13/cobra"
 )
 
@@ -27,7 +26,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		c := make(chan bool)
-		go koo.Bar(-1, "executing", c)
+
 		down(c)
 	},
 }
@@ -47,16 +46,16 @@ func init() {
 }
 
 func down(c chan bool) {
-
+	go koo.Bar(-1, "executing", c)
 	//cmd.Stdout = os.Stdout
 	cmd := exec.Command("vagrant", "halt")
-	s := spinner.StartNew("This may take some time...")
+	//s := spinner.StartNew("This may take some time...")
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err != nil {
 		log.Fatalf("cmd.Run() failed with %s\n", err)
 	}
-	s.Stop()
+	//s.Stop()
 	c <- true
 	fmt.Println("Your ook lab is down!")
 }
