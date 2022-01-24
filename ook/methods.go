@@ -13,7 +13,7 @@ func (Ook *OokDir) Define() interface{} {
 	koo.CheckErr(err)
 
 	Ook.Home.Root = userHomeDir + "/.ook"
-	Ook.Home.Sh = Ook.Home.Root + "/lib/Sh"
+	Ook.Home.Sh = Ook.Home.Root + "/lib/sh"
 	Ook.Home.Rb = Ook.Home.Root + "/lib/rb"
 	Ook.Home.Vagranfile = Ook.Home.Root + "/Vagrantfile"
 	Ook.Home.Confrb = Ook.Home.Root + "/conf.rb"
