@@ -6,70 +6,13 @@ package cmd
 
 import (
 	"encoding/base64"
+	"ook/koo"
 	"os"
 	"strings"
 
 	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
 )
-
-type OokHome struct {
-	root       string
-	sh         string
-	rb         string
-	vagranfile string
-	scaler_sh  string
-	master_sh  string
-	worker_sh  string
-	common_sh  string
-	confrb     string
-	labrb      string
-}
-
-type OokLab struct {
-	root       string
-	configfile string
-	workers    string
-	masters    string
-	hosts      string
-}
-
-type OokDir struct {
-	home OokHome
-	lab  OokLab
-}
-
-func (Ook *OokDir) define() interface{} {
-
-	userHomeDir, err := os.UserHomeDir()
-	check(err)
-
-	Ook.home.root = userHomeDir + "/.ook"
-	Ook.home.sh = Ook.home.root + "/lib/sh"
-	Ook.home.rb = Ook.home.root + "/lib/rb"
-	Ook.home.vagranfile = Ook.home.root + "/Vagrantfile"
-	Ook.home.confrb = Ook.home.root + "/conf.rb"
-	Ook.home.labrb = Ook.home.root + "/lib/rb/lab.rb"
-	Ook.home.master_sh = Ook.home.sh + "/master.sh"
-	Ook.home.worker_sh = Ook.home.sh + "/worker.sh"
-	Ook.home.scaler_sh = Ook.home.sh + "/scaler.sh"
-	Ook.home.common_sh = Ook.home.sh + "/common.sh"
-
-	Ook.lab.root = ".ook"
-	Ook.lab.configfile = Ook.lab.root + "/config.env"
-	Ook.lab.masters = Ook.lab.root + "/masters"
-	Ook.lab.workers = Ook.lab.root + "/workers"
-	Ook.lab.hosts = Ook.lab.root + "/hosts"
-
-	return Ook
-}
-
-func (Ook *OokDir) createFiles(fs afero.Fs) {
-	dat, err := os.ReadFile(Ook.home.confrb)
-	check(err)
-
-	afero.WriteFile(fs, Ook.lab.configfile, []byte(string(dat)), 0644)
-}
 
 // initCmd represents the init command
 var initCmd = &cobra.Command{
@@ -99,11 +42,11 @@ func init() {
 	// initCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
+//unc check(e error) {
+//	if e != nil {
+//		panic(e)
+//	}
+//}
 
 func init_strap() {
 	appfs := afero.NewOsFs()
@@ -115,19 +58,19 @@ func init_strap() {
 	appfs.Mkdir(ook.lab.root, 0755)
 
 	dat, err := os.ReadFile(ook.home.vagranfile)
-	check(err)
+	koo.CheckErr(err)
 
 	scaler_sh, err := os.ReadFile(ook.home.scaler_sh)
-	check(err)
+	koo.CheckErr(err)
 
 	master_sh, err := os.ReadFile(ook.home.master_sh)
-	check(err)
+	koo.CheckErr(err)
 
 	worker_sh, err := os.ReadFile(ook.home.worker_sh)
-	check(err)
+	koo.CheckErr(err)
 
 	common_sh, err := os.ReadFile(ook.home.common_sh)
-	check(err)
+	koo.CheckErr(err)
 
 	vagrantfile := strings.Replace(string(dat), "conf.rb", ook.home.confrb, 5)
 	vagrantfile = strings.Replace(string(vagrantfile), "lab.rb", ook.home.labrb, 5)
