@@ -64,6 +64,6 @@ func check_it() {
 	//cmd.Wait()
 	//ookSsh("vagrant", "vagrant", "10.8.8.10", "/bin/bash")
 	koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'")
-	koo.Bar()
+	koo.Bar(-1, "executing")
 	//s.Stop()
 }
