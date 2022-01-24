@@ -65,7 +65,7 @@ func check_it() {
 	//ookSsh("vagrant", "vagrant", "10.8.8.10", "/bin/bash")
 	c := make(chan string)
 
-	go koo.Bar(-1, "executing")
+	go koo.Bar(-1, "executing", c)
 
 	koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'", c)
 	//
