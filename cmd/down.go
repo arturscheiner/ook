@@ -5,7 +5,6 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
 	"ook/koo"
 	"time"
 
@@ -23,8 +22,8 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		c := make(chan bool)
-		go koo.Bar(-1, "executing")
+		c := make(chan string)
+		go koo.Bar(-1, "executing", c)
 		down(c)
 	},
 }
@@ -43,7 +42,7 @@ func init() {
 	// downCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func down(c chan bool) {
+func down(c chan string) {
 
 	//cmd.Stdout = os.Stdout
 	time.Sleep(1000 * time.Millisecond)
@@ -55,6 +54,6 @@ func down(c chan bool) {
 	//	log.Fatalf("cmd.Run() failed with %s\n", err)
 	//}
 	//s.Stop()
-	c <- true
-	fmt.Println("Your ook lab is down!")
+	c <- "done!"
+	//fmt.Println("Your ook lab is down!")
 }
