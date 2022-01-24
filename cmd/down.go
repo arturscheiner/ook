@@ -25,7 +25,7 @@ to quickly create a Cobra application.`,
 		c := make(chan string)
 		//go down(c)
 		go koo.Bar(-1, "executing", c)
-		go down(c)
+		down(c)
 	},
 }
 
