@@ -25,15 +25,18 @@ func CheckErr(e error) {
 	}
 }
 
-func Bar(len int64, desc string) {
+func Bar(len int64, desc string, c chan bool) {
 	bar := progressbar.DefaultBytes(len, desc)
 	for i := 0; i < 100; i++ {
+		if <-c {
+			return
+		}
 		bar.Add(1)
 		time.Sleep(40 * time.Millisecond)
 	}
 }
 
-func OpBar() {
+func OpBar(fn func()) {
 	doneCh := make(chan struct{})
 
 	bar := progressbar.NewOptions(1000,
@@ -59,6 +62,7 @@ func OpBar() {
 			bar.Add(1)
 			time.Sleep(5 * time.Millisecond)
 		}
+		fn()
 	}()
 
 	// got notified that progress bar is complete.
@@ -66,7 +70,7 @@ func OpBar() {
 	fmt.Println("\n ======= progress bar completed ==========\n")
 }
 
-func OokSsh(user string, password string, server string, command string) {
+func OokSsh(user string, password string, server string, command string, c chan bool) {
 	// Start new ssh connection with private key.
 	auth := goph.Password(password)
 
@@ -87,6 +91,7 @@ func OokSsh(user string, password string, server string, command string) {
 
 	// Get your output as []byte.
 	fmt.Println(string(out))
+	c <- true
 }
 
 func ReadFile(fn string, ln int32) (str string, err error) {

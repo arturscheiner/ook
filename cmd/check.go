@@ -7,7 +7,6 @@ package cmd
 import (
 	"ook/koo"
 
-	"github.com/schollz/progressbar/v3"
 	"github.com/spf13/cobra"
 )
 
@@ -64,12 +63,12 @@ func check_it() {
 	//io.Copy(io.MultiWriter(f, os.Stdout), stdout)
 	//cmd.Wait()
 	//ookSsh("vagrant", "vagrant", "10.8.8.10", "/bin/bash")
-	bar := progressbar.DefaultBytes(
-		-1,
-		"downloading",
-	)
-	koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'")
-	bar.Add(1)
-	//koo.Bar(-1, "executing")
+	c := make(chan bool)
+
+	koo.Bar(-1, "executing", c)
+
+	go koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'", c)
+	//
+	//
 	//s.Stop()
 }

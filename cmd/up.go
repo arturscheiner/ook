@@ -6,7 +6,6 @@ package cmd
 
 import (
 	"fmt"
-	"ook/koo"
 
 	"os"
 	"os/exec"
@@ -72,5 +71,5 @@ func up(o bool) {
 
 	fmt.Println("Your ook lab is up and running!")
 
-	koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'")
+	//koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'")
 }
