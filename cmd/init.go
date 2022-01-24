@@ -7,6 +7,7 @@ package cmd
 import (
 	"encoding/base64"
 	"ook/koo"
+	"ook/ook"
 	"os"
 	"strings"
 
@@ -51,29 +52,29 @@ func init() {
 func init_strap() {
 	appfs := afero.NewOsFs()
 
-	ook := &OokDir{}
+	ook := &ook.OokDir{}
 
-	ook.define()
+	ook.Define()
 
-	appfs.Mkdir(ook.lab.root, 0755)
+	appfs.Mkdir(ook.Lab.Root, 0755)
 
-	dat, err := os.ReadFile(ook.home.vagranfile)
+	dat, err := os.ReadFile(ook.Home.Vagranfile)
 	koo.CheckErr(err)
 
-	scaler_sh, err := os.ReadFile(ook.home.scaler_sh)
+	scaler_sh, err := os.ReadFile(ook.Home.Scaler_sh)
 	koo.CheckErr(err)
 
-	master_sh, err := os.ReadFile(ook.home.master_sh)
+	master_sh, err := os.ReadFile(ook.Home.Master_sh)
 	koo.CheckErr(err)
 
-	worker_sh, err := os.ReadFile(ook.home.worker_sh)
+	worker_sh, err := os.ReadFile(ook.Home.Worker_sh)
 	koo.CheckErr(err)
 
-	common_sh, err := os.ReadFile(ook.home.common_sh)
+	common_sh, err := os.ReadFile(ook.Home.Common_sh)
 	koo.CheckErr(err)
 
-	vagrantfile := strings.Replace(string(dat), "conf.rb", ook.home.confrb, 5)
-	vagrantfile = strings.Replace(string(vagrantfile), "lab.rb", ook.home.labrb, 5)
+	vagrantfile := strings.Replace(string(dat), "conf.rb", ook.Home.Confrb, 5)
+	vagrantfile = strings.Replace(string(vagrantfile), "lab.rb", ook.Home.Labrb, 5)
 
 	scaler_sh_enc := base64.StdEncoding.EncodeToString([]byte(scaler_sh))
 	master_sh_enc := base64.StdEncoding.EncodeToString([]byte(master_sh))
@@ -87,5 +88,5 @@ func init_strap() {
 
 	afero.WriteFile(appfs, "Vagrantfile", []byte(string(vagrantfile)), 0644)
 
-	ook.createFiles(appfs)
+	ook.CreateFiles(appfs)
 }

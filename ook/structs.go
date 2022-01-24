@@ -1,27 +1,27 @@
 package ook
 
 type OokHome struct {
-	root       string
-	sh         string
-	rb         string
-	vagranfile string
-	scaler_sh  string
-	master_sh  string
-	worker_sh  string
-	common_sh  string
-	confrb     string
-	labrb      string
+	Root       string
+	Sh         string
+	Rb         string
+	Vagranfile string
+	Scaler_sh  string
+	Master_sh  string
+	Worker_sh  string
+	Common_sh  string
+	Confrb     string
+	Labrb      string
 }
 
 type OokLab struct {
-	root       string
-	configfile string
-	workers    string
-	masters    string
-	hosts      string
+	Root       string
+	Configfile string
+	Workers    string
+	Masters    string
+	Hosts      string
 }
 
 type OokDir struct {
-	home OokHome
-	lab  OokLab
+	Home OokHome
+	Lab  OokLab
 }

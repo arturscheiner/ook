@@ -7,34 +7,34 @@ import (
 	"github.com/spf13/afero"
 )
 
-func (Ook *OokDir) define() interface{} {
+func (Ook *OokDir) Define() interface{} {
 
 	userHomeDir, err := os.UserHomeDir()
 	koo.CheckErr(err)
 
-	Ook.home.root = userHomeDir + "/.ook"
-	Ook.home.sh = Ook.home.root + "/lib/sh"
-	Ook.home.rb = Ook.home.root + "/lib/rb"
-	Ook.home.vagranfile = Ook.home.root + "/Vagrantfile"
-	Ook.home.confrb = Ook.home.root + "/conf.rb"
-	Ook.home.labrb = Ook.home.root + "/lib/rb/lab.rb"
-	Ook.home.master_sh = Ook.home.sh + "/master.sh"
-	Ook.home.worker_sh = Ook.home.sh + "/worker.sh"
-	Ook.home.scaler_sh = Ook.home.sh + "/scaler.sh"
-	Ook.home.common_sh = Ook.home.sh + "/common.sh"
+	Ook.Home.Root = userHomeDir + "/.ook"
+	Ook.Home.Sh = Ook.Home.Root + "/lib/Sh"
+	Ook.Home.Rb = Ook.Home.Root + "/lib/rb"
+	Ook.Home.Vagranfile = Ook.Home.Root + "/Vagrantfile"
+	Ook.Home.Confrb = Ook.Home.Root + "/conf.rb"
+	Ook.Home.Labrb = Ook.Home.Root + "/lib/rb/Lab.rb"
+	Ook.Home.Master_sh = Ook.Home.Sh + "/Master.Sh"
+	Ook.Home.Worker_sh = Ook.Home.Sh + "/Worker.Sh"
+	Ook.Home.Scaler_sh = Ook.Home.Sh + "/Scaler.Sh"
+	Ook.Home.Common_sh = Ook.Home.Sh + "/Common.Sh"
 
-	Ook.lab.root = ".ook"
-	Ook.lab.configfile = Ook.lab.root + "/config.env"
-	Ook.lab.masters = Ook.lab.root + "/masters"
-	Ook.lab.workers = Ook.lab.root + "/workers"
-	Ook.lab.hosts = Ook.lab.root + "/hosts"
+	Ook.Lab.Root = ".ook"
+	Ook.Lab.Configfile = Ook.Lab.Root + "/config.env"
+	Ook.Lab.Masters = Ook.Lab.Root + "/Masters"
+	Ook.Lab.Workers = Ook.Lab.Root + "/Workers"
+	Ook.Lab.Hosts = Ook.Lab.Root + "/hosts"
 
 	return Ook
 }
 
-func (Ook *OokDir) createFiles(fs afero.Fs) {
-	dat, err := os.ReadFile(Ook.home.confrb)
+func (Ook *OokDir) CreateFiles(fs afero.Fs) {
+	dat, err := os.ReadFile(Ook.Home.Confrb)
 	koo.CheckErr(err)
 
-	afero.WriteFile(fs, Ook.lab.configfile, []byte(string(dat)), 0644)
+	afero.WriteFile(fs, Ook.Lab.Configfile, []byte(string(dat)), 0644)
 }
