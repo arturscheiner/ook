@@ -28,6 +28,7 @@ to quickly create a Cobra application.`,
 
 		rstatus, _ := cmd.Flags().GetBool("redo")
 		if rstatus { // if status is true, call addFloat
+
 			del_ook()
 			get_ook()
 		} else {
