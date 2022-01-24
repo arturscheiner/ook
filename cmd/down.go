@@ -45,7 +45,7 @@ func init() {
 func down(c chan string) {
 
 	//cmd.Stdout = os.Stdout
-	time.Sleep(10000 * time.Millisecond)
+	time.Sleep(1000 * time.Millisecond)
 	//cmd := exec.Command("vagrant", "halt")
 	//s := spinner.StartNew("This may take some time...")
 	//cmd.Stderr = os.Stderr
