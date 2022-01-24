@@ -27,15 +27,17 @@ func CheckErr(e error) {
 
 func Bar(len int64, desc string, c chan string) {
 	bar := progressbar.DefaultBytes(len, desc)
-	for i := 0; i < 1000; i++ {
-		bar.Add(1)
-		time.Sleep(40 * time.Millisecond)
-		if c != nil {
-			break
+	_, ok := <-c
+	if ok {
+		bar.Describe(<-c)
+		bar.Finish()
+	} else {
+		for i := 0; i < 1000; i++ {
+			bar.Add(1)
+			time.Sleep(40 * time.Millisecond)
 		}
 	}
-	bar.Describe(<-c)
-	bar.Finish()
+
 }
 
 func OpBar(fn func()) {
