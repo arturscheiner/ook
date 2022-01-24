@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/janeczku/go-spinner"
+	"github.com/k0kubun/go-ansi"
 	"github.com/melbahja/goph"
 	"github.com/schollz/progressbar/v3"
 )
@@ -25,12 +26,35 @@ func CheckErr(e error) {
 }
 
 func Bar(len int64, desc string) {
-	bar := progressbar.DefaultBytes(len, desc)
-	bar.Set(10)
-	for i := 0; i < 100; i++ {
-		bar.Add(1)
-		time.Sleep(40 * time.Millisecond)
-	}
+	doneCh := make(chan struct{})
+
+	bar := progressbar.NewOptions(1000,
+		progressbar.OptionSetWriter(ansi.NewAnsiStdout()),
+		progressbar.OptionEnableColorCodes(true),
+		progressbar.OptionSetWidth(50),
+		progressbar.OptionSetTheme(progressbar.Theme{
+			Saucer:        " ",
+			AltSaucerHead: "[yellow]<[reset]",
+			SaucerHead:    "[yellow]-[reset]",
+			SaucerPadding: "[white]•",
+			BarStart:      "[blue]|[reset]",
+			BarEnd:        "[blue]|[reset]",
+		}),
+		progressbar.OptionOnCompletion(func() {
+			doneCh <- struct{}{}
+		}),
+	)
+
+	go func() {
+		for i := 0; i < 1000; i++ {
+			bar.Add(1)
+			time.Sleep(10 * time.Millisecond)
+		}
+	}()
+
+	// got notified that progress bar is complete.
+	<-doneCh
+	fmt.Println("\n ======= progress bar completed ==========\n")
 }
 
 func OokSsh(user string, password string, server string, command string) {
