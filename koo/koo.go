@@ -28,11 +28,11 @@ func CheckErr(e error) {
 func Bar(len int64, desc string, c chan bool) {
 	bar := progressbar.DefaultBytes(len, desc)
 	for i := 0; i < 100; i++ {
-		if <-c {
-			return
-		}
 		bar.Add(1)
 		time.Sleep(40 * time.Millisecond)
+		if <-c {
+			break
+		}
 	}
 }
 
@@ -90,8 +90,9 @@ func OokSsh(user string, password string, server string, command string, c chan 
 	}
 
 	// Get your output as []byte.
-	fmt.Println(string(out))
 	c <- true
+	fmt.Println(string(out))
+
 }
 
 func ReadFile(fn string, ln int32) (str string, err error) {
