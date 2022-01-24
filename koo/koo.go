@@ -26,10 +26,10 @@ func CheckErr(e error) {
 }
 
 func Bar(len int64, desc string, c chan string) {
-	bar := progressbar.DefaultBytes(len, desc)
+	bar := progressbar.DefaultBytes(len, <-c)
 	for i := 0; i < 100; i++ {
 		bar.Add(1)
-		bar.Describe(<-c)
+		//bar.Describe(<-c)
 		time.Sleep(40 * time.Millisecond)
 	}
 
