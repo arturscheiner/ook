@@ -29,7 +29,7 @@ func Bar(len int64, desc string, c chan string) {
 	bar := progressbar.DefaultBytes(len, desc)
 	for {
 		bar.Add(1)
-		if <-c != "" {
+		if c != nil {
 			bar.Describe(<-c)
 			bar.Finish()
 		}
