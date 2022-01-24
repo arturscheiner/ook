@@ -25,10 +25,11 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pkg/sftp v1.13.4 // indirect
+	github.com/rs/zerolog v1.26.1 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/xanzy/ssh-agent v0.3.0 // indirect
-	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
+	golang.org/x/crypto v0.0.0-20211215165025-cf75a172585e // indirect
 	golang.org/x/net v0.0.0-20210813160813-60bc85c4be6d // indirect
 	golang.org/x/sys v0.0.0-20211210111614-af8b64212486 // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect

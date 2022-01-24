@@ -13,6 +13,9 @@ import (
 
 	"github.com/janeczku/go-spinner"
 	"github.com/spf13/cobra"
+
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 )
 
 // upCmd represents the up command
@@ -48,27 +51,24 @@ func init() {
 }
 
 func up(o bool) {
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	cmd := exec.Command("vagrant", "up")
 	if o {
 		cmd.Stdout = os.Stdout
+		err := cmd.Run()
+		if err != nil {
+			log.Print("cmd.Run() failed with %s\n", err)
+		}
+
+	} else {
+		s := spinner.StartNew("This may take some time...")
+		cmd.Stderr = os.Stderr
+		err := cmd.Run()
+		if err != nil {
+			log.Print("cmd.Run() failed with %s\n", err)
+		}
+		s.Stop()
 	}
-	s := spinner.StartNew("This may take some time...")
-	//s.SetCharset([]string{"a", "b"})
-	//cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	//stdout, _ := cmd.StdoutPipe()
-	//f, _ := os.Create(".ook/stdout.log")
-
-	cmd.Run()
-	//if err != nil {
-	// log.Fatalf("cmd.Run() failed with %s\n", err)
-	//}
-
-	//io.Copy(io.MultiWriter(f, os.Stdout), stdout)
-	//cmd.Wait()
-
-	s.Stop()
 
 	fmt.Println("Your ook lab is up and running!")
 
