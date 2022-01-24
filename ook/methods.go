@@ -3,6 +3,7 @@ package ook
 import (
 	"ook/koo"
 	"os"
+	"strings"
 
 	"github.com/spf13/afero"
 )
@@ -44,5 +45,5 @@ func (Ook *OokDir) GetVersion() string {
 	dat, err := os.ReadFile(Ook.Home.Version)
 	koo.CheckErr(err)
 
-	return string(dat)
+	return strings.TrimSuffix(string(dat), "\n")
 }
