@@ -40,7 +40,7 @@ func (Ook *OokDir) CreateFiles(fs afero.Fs) {
 	afero.WriteFile(fs, Ook.Lab.Configfile, []byte(string(dat)), 0644)
 }
 
-func (Ook *OokDir) GetVersion(fs afero.Fs) string {
+func (Ook *OokDir) GetVersion() string {
 	dat, err := os.ReadFile(Ook.Home.Version)
 	koo.CheckErr(err)
 
