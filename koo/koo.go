@@ -28,7 +28,7 @@ func CheckErr(e error) {
 func Bar(len int64, desc string) {
 	doneCh := make(chan struct{})
 
-	bar := progressbar.NewOptions(1000,
+	bar := progressbar.NewOptions(100,
 		progressbar.OptionSetWriter(ansi.NewAnsiStdout()),
 		progressbar.OptionEnableColorCodes(true),
 		progressbar.OptionSetWidth(50),
@@ -46,7 +46,7 @@ func Bar(len int64, desc string) {
 	)
 
 	go func() {
-		for i := 0; i < 1000; i++ {
+		for i := 0; i < 100; i++ {
 			bar.Add(1)
 			time.Sleep(10 * time.Millisecond)
 		}
