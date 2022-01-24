@@ -22,6 +22,7 @@ func (Ook *OokDir) Define() interface{} {
 	Ook.Home.Worker_sh = Ook.Home.Sh + "/worker.sh"
 	Ook.Home.Scaler_sh = Ook.Home.Sh + "/scaler.sh"
 	Ook.Home.Common_sh = Ook.Home.Sh + "/common.sh"
+	Ook.Home.Version = Ook.Home.Root + "/VERSION"
 
 	Ook.Lab.Root = ".ook"
 	Ook.Lab.Configfile = Ook.Lab.Root + "/config.env"
@@ -37,4 +38,11 @@ func (Ook *OokDir) CreateFiles(fs afero.Fs) {
 	koo.CheckErr(err)
 
 	afero.WriteFile(fs, Ook.Lab.Configfile, []byte(string(dat)), 0644)
+}
+
+func (Ook *OokDir) GetVersion(fs afero.Fs) string {
+	dat, err := os.ReadFile(Ook.Home.Version)
+	koo.CheckErr(err)
+
+	return string(dat)
 }

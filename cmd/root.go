@@ -5,10 +5,11 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
 	"ook/ook"
 	"os"
 
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 )
 
@@ -42,10 +43,12 @@ func Execute() {
 
 func init() {
 	ook := &ook.OokDir{}
-
 	ook.Define()
 
-	fmt.Println(ook.Lab.Root)
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+	log.Info().Msg("ook version " + Version)
+	log.Info().Msg(".ook version " + ook.Home.Version)
+
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.

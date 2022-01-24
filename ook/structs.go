@@ -11,6 +11,7 @@ type OokHome struct {
 	Common_sh  string
 	Confrb     string
 	Labrb      string
+	Version    string
 }
 
 type OokLab struct {
