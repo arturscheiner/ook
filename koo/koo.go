@@ -25,9 +25,9 @@ func CheckErr(e error) {
 	}
 }
 
-func Bar(len int64, desc string, c chan string) {
+func Bar(len int64, desc string) {
 	bar := progressbar.DefaultBytes(len, desc)
-	bar.Describe(<-c)
+	//bar.Describe(<-c)
 	for i := 0; i < 100; i++ {
 		bar.Add(1)
 		time.Sleep(40 * time.Millisecond)
