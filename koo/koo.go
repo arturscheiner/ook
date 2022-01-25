@@ -80,7 +80,7 @@ func OokSsh(user string, password string, server string, command string) {
 	//auth := goph.Password(password)
 
 	// Start new ssh connection with private key.
-	auth, err := goph.Key("vagrant_private_key", "")
+	auth, err := goph.Key("./vagrant_private_key", "")
 	if err != nil {
 		log.Fatal(err)
 	}
