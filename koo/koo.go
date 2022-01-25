@@ -180,7 +180,7 @@ func SshTest(user string, server string, command string) {
 
 	sshConfig := &ssh.ClientConfig{
 		User:            user,
-		Auth:            []ssh.AuthMethod{ssh.PublicKeys()},
+		Auth:            []ssh.AuthMethod{pcert},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
