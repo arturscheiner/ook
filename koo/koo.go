@@ -77,7 +77,13 @@ func OpBar(fn func()) {
 
 func OokSsh(user string, password string, server string, command string) {
 	// Start new ssh connection with private key.
-	auth := goph.Password(password)
+	//auth := goph.Password(password)
+
+	// Start new ssh connection with private key.
+	auth, err := goph.Key("vagrant_private_key", "")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	client, err := goph.NewUnknown(user, server, auth)
 	if err != nil {
