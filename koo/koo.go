@@ -172,7 +172,7 @@ func SshTest(user string, server string, command string) {
 	}
 	log.Printf("signer: %v", usigner)
 
-	ucertSigner, err := ssh.NewCertSigner(pcert.(*ssh.Certificate), usigner)
+	//ucertSigner, err := ssh.NewPublicKey(pcert)
 
 	if err != nil {
 		log.Printf("Failed to create new signer, err: %v", err)
@@ -180,7 +180,7 @@ func SshTest(user string, server string, command string) {
 
 	sshConfig := &ssh.ClientConfig{
 		User:            user,
-		Auth:            []ssh.AuthMethod{ssh.PublicKeys(ucertSigner)},
+		Auth:            []ssh.AuthMethod{ssh.PublicKeys()},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
