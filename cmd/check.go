@@ -68,7 +68,8 @@ func check_it() {
 	//go koo.Bar(-1, "executing")
 
 	//koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'")
-	koo.OokSsh("vagrant", "vagrant", "192.168.121.100", "bash -c '~/do_test'")
+	//koo.OokSsh("vagrant", "vagrant", "192.168.121.100", "bash -c '~/do_test'")
+	koo.SshTest("vagrant", "192.168.121.100", "bash -c '~/do_test'")
 	//
 	//
 	//s.Stop()

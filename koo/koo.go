@@ -2,7 +2,9 @@ package koo
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -12,6 +14,7 @@ import (
 	"github.com/k0kubun/go-ansi"
 	"github.com/melbahja/goph"
 	"github.com/schollz/progressbar/v3"
+	"golang.org/x/crypto/ssh"
 )
 
 func CommandExists(cmd string) bool {
@@ -147,4 +150,56 @@ func Check_up() {
 	//cmd.Wait()
 
 	s.Stop()
+}
+
+func SshTest(user string, server string, command string) {
+	authorizedKeysBytes, _ := ioutil.ReadFile("vagrant_public_key")
+	pcert, _, _, _, err := ssh.ParseAuthorizedKey(authorizedKeysBytes)
+	if err != nil {
+		log.Printf("Failed to load authorized_keys, err: %v", err)
+	}
+
+	privkeyBytes, _ := ioutil.ReadFile("vagrant_private_key")
+	upkey, err := ssh.ParseRawPrivateKey(privkeyBytes)
+
+	if err != nil {
+		log.Printf("Failed to load authorized_keys, err: %v", err)
+	}
+
+	usigner, err := ssh.NewSignerFromKey(upkey)
+	if err != nil {
+		log.Printf("Failed to create new signer, err: %v", err)
+	}
+	log.Printf("signer: %v", usigner)
+
+	ucertSigner, err := ssh.NewCertSigner(pcert.(*ssh.Certificate), usigner)
+
+	if err != nil {
+		log.Printf("Failed to create new signer, err: %v", err)
+	}
+
+	sshConfig := &ssh.ClientConfig{
+		User:            user,
+		Auth:            []ssh.AuthMethod{ssh.PublicKeys(ucertSigner)},
+		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+	}
+
+	client, err := ssh.Dial("tcp", server+":22", sshConfig)
+
+	if err != nil {
+		log.Fatalf("Failed to dial, err: %v", err)
+	}
+
+	session, err := client.NewSession()
+	if err != nil {
+		log.Fatal("Failed to create session: ", err)
+	}
+	defer session.Close()
+
+	var b bytes.Buffer
+	session.Stdout = &b
+	if err := session.Run(command); err != nil {
+		log.Fatal("Failed to run: " + err.Error())
+	}
+	log.Println(b.String())
 }
