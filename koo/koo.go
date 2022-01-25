@@ -153,8 +153,8 @@ func Check_up() {
 }
 
 func SshTest(user string, server string, command string) {
-	//authorizedKeysBytes, _ := ioutil.ReadFile("vagrant_public_key")
-	//pcert, _, _, _, err := ssh.ParseAuthorizedKey(authorizedKeysBytes)
+	authorizedKeysBytes, _ := ioutil.ReadFile("vagrant_public_key")
+	ssh.ParseAuthorizedKey(authorizedKeysBytes)
 	//if err != nil {
 	///	log.Printf("Failed to load authorized_keys, err: %v", err)
 	//}
