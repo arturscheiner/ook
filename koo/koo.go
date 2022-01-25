@@ -170,7 +170,7 @@ func SshTest(user string, server string, command string) {
 	if err != nil {
 		log.Printf("Failed to create new signer, err: %v", err)
 	}
-	log.Printf("signer: %v", usigner)
+	log.Printf("signer: %s", usigner)
 
 	//ucertSigner, err := ssh.NewPublicKey(pcert, usigner)
 
