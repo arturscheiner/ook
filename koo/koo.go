@@ -153,11 +153,11 @@ func Check_up() {
 }
 
 func SshTest(user string, server string, command string) {
-	authorizedKeysBytes, _ := ioutil.ReadFile("vagrant_public_key")
-	pcert, _, _, _, err := ssh.ParseAuthorizedKey(authorizedKeysBytes)
-	if err != nil {
-		log.Printf("Failed to load authorized_keys, err: %v", err)
-	}
+	//authorizedKeysBytes, _ := ioutil.ReadFile("vagrant_public_key")
+	//pcert, _, _, _, err := ssh.ParseAuthorizedKey(authorizedKeysBytes)
+	//if err != nil {
+	///	log.Printf("Failed to load authorized_keys, err: %v", err)
+	//}
 
 	privkeyBytes, _ := ioutil.ReadFile("vagrant_private_key")
 	upkey, err := ssh.ParseRawPrivateKey(privkeyBytes)
@@ -172,7 +172,7 @@ func SshTest(user string, server string, command string) {
 	}
 	log.Printf("signer: %v", usigner)
 
-	//ucertSigner, err := ssh.NewPublicKey(pcert)
+	//ucertSigner, err := ssh.NewPublicKey(pcert, usigner)
 
 	if err != nil {
 		log.Printf("Failed to create new signer, err: %v", err)
@@ -180,7 +180,7 @@ func SshTest(user string, server string, command string) {
 
 	sshConfig := &ssh.ClientConfig{
 		User:            user,
-		Auth:            []ssh.AuthMethod{pcert},
+		Auth:            []ssh.AuthMethod{ssh.PublicKeys(usigner)},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
