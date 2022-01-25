@@ -79,13 +79,14 @@ func OokSsh(user string, password string, server string, command string) {
 	// Start new ssh connection with private key.
 	//auth := goph.Password(password)
 
+	//goth.AddKnownHost("alpine",server,,"known_hosts")
 	// Start new ssh connection with private key.
-	auth, err := goph.Key("vagrant_private_key", "")
+	auth, err := goph.Key("vagrant_private_key", "abcd")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	client, err := goph.NewUnknown(user, server, auth)
+	client, err := goph.New(user, server, auth)
 	if err != nil {
 		log.Fatal(err)
 	}
