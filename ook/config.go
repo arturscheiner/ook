@@ -5,12 +5,12 @@ import (
 	"os"
 	"strings"
 
-	"github.com/rs/zerolog/log"
 	"github.com/spf13/afero"
 )
 
 func (c *Config) Run(r string) {
-	log.Info().Msg("Hellow " + r)
+	c.Define()
+	c.handleInit()
 
 }
 
