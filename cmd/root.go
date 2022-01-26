@@ -10,8 +10,11 @@ import (
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
 )
+
+var appfs afero.Fs
 
 // rootCmd represents the base command when called without any subcommands
 var (

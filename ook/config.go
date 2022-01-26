@@ -5,8 +5,17 @@ import (
 	"os"
 	"strings"
 
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/afero"
 )
+
+func (c *Config) Init() {
+	log.Info().Msg("Hellow Init")
+}
+
+func (c *Config) Install() {
+	log.Info().Msg("Hellow Init")
+}
 
 func (Ook *OokDir) Define() interface{} {
 

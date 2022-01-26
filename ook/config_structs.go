@@ -1,5 +1,21 @@
 package ook
 
+import (
+	"github.com/spf13/afero"
+)
+
+type Config struct {
+	Fs  afero.Fs
+	Dir OokDir
+	Run
+}
+
+type OokDir struct {
+	Home    OokHome
+	Lab     OokLab
+	Vagrant Vagrant
+}
+
 type OokHome struct {
 	Root       string
 	Sh         string
@@ -29,8 +45,7 @@ type Vagrant struct {
 	Provider string
 }
 
-type OokDir struct {
-	Home    OokHome
-	Lab     OokLab
-	Vagrant Vagrant
+type Run interface {
+	Init()
+	Install()
 }
