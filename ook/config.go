@@ -20,6 +20,8 @@ func (c *Config) Run(r string) {
 		c.handleConfigRedo()
 	case "unistall":
 		c.handleConfigUninstall()
+	case "inspect":
+		c.handleConfigInspect()
 	}
 }
 

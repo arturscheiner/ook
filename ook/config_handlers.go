@@ -79,7 +79,6 @@ func (c *Config) handleConfigInstall() {
 	})
 
 	koo.CheckErr(err)
-	c.handleConfigCheck()
 }
 
 func (c *Config) handleConfigRedo() {
@@ -94,7 +93,7 @@ func (c *Config) handleConfigUninstall() {
 	koo.CheckErr(err)
 }
 
-func (c *Config) handleConfigCheck() {
+func (c *Config) handleConfigInspect() {
 	log.Info().Msg("Handling Check")
 	ve := koo.CommandExists("vagrant")
 	if ve {
