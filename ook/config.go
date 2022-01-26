@@ -15,13 +15,11 @@ func (c *Config) Run(r string) {
 	case "init":
 		c.handleInit()
 	case "install":
-		c.handleInstall()
+		c.handleConfigInstall()
 	case "redo":
-		c.handleInstallRedo()
+		c.handleConfigRedo()
 	case "unistall":
-		c.handleUninstall()
-	default:
-		return
+		c.handleConfigUninstall()
 	}
 }
 

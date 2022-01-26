@@ -63,9 +63,9 @@ func (c *Config) GetVersion() string {
 	return strings.TrimSuffix(string(dat), "\n")
 }
 
-func (c *Config) handleInstall() {
+func (c *Config) handleConfigInstall() {
 	// Clone the given repository to the given directory
-
+	log.Info().Msg("Handling Install")
 	tde, err := afero.DirExists(c.Fs, c.Dir.Home.Root)
 	koo.CheckErr(err)
 
@@ -79,22 +79,22 @@ func (c *Config) handleInstall() {
 	})
 
 	koo.CheckErr(err)
-	c.handleInstallCheck()
+	c.handleConfigCheck()
 }
 
-func (c *Config) handleInstallRedo() {
+func (c *Config) handleConfigRedo() {
 	log.Info().Msg("Handling Redo")
-	c.handleUninstall()
-	c.handleInstall()
+	c.handleConfigUninstall()
+	c.handleConfigInstall()
 }
 
-func (c *Config) handleUninstall() {
+func (c *Config) handleConfigUninstall() {
 	log.Info().Msg("Handling Uninstall")
 	err := c.Fs.RemoveAll(c.Dir.Home.Root)
 	koo.CheckErr(err)
 }
 
-func (c *Config) handleInstallCheck() {
+func (c *Config) handleConfigCheck() {
 	log.Info().Msg("Handling Check")
 	ve := koo.CommandExists("vagrant")
 	if ve {

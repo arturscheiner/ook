@@ -23,18 +23,12 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-
-		rstatus, _ := cmd.Flags().GetBool("redo")
-		if rstatus {
-			install.Run("install_redo")
-		} else {
-			install.Run("install")
-		}
+		install.Run("install")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(installCmd)
+	installCmd.AddCommand(installCmd)
 
 	// Here you will define your flags and configuration settings.
 
@@ -44,5 +38,5 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	installCmd.Flags().BoolP("redo", "r", false, "Re-bootstrap the ook needed environment")
+	//installCmd.Flags().BoolP("redo", "r", false, "Re-bootstrap the ook needed environment")
 }
