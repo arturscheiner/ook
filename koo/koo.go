@@ -156,6 +156,8 @@ func Check_up() {
 func SshTest(user string, server string, command string) {
 	authorizedKeysBytes, _ := ioutil.ReadFile("vagrant_private_key")
 	//pcert, _, _, _, err := ssh.ParseAuthorizedKey(authorizedKeysBytes)
+
+	host := server + ":22"
 	//user = "vagrant"
 	//pwd := "vagrant"
 	pKey := []byte(authorizedKeysBytes)
