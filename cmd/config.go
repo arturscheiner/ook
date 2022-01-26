@@ -5,6 +5,7 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
 	"ook/ook"
 
 	"github.com/spf13/cobra"
@@ -23,25 +24,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		istatus, _ := cmd.Flags().GetBool("install")
-		if istatus {
-			config.Run("install")
-		}
-
-		rstatus, _ := cmd.Flags().GetBool("redo")
-		if rstatus {
-			config.Run("redo")
-		}
-
-		ustatus, _ := cmd.Flags().GetBool("uninstall")
-		if ustatus {
-			config.Run("uninstall")
-		}
-
-		cstatus, _ := cmd.Flags().GetBool("check")
-		if cstatus {
-			config.Run("redo")
-		}
+		fmt.Println("You must choose one of the comands")
 	},
 }
 
@@ -56,8 +39,8 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	configCmd.Flags().BoolP("install", "i", false, "Install the ook needed environment files")
-	configCmd.Flags().BoolP("redo", "r", false, "Re-install the ook needed environment")
-	configCmd.Flags().BoolP("uninstall", "u", false, "Uninstall the ook needed environment")
-	configCmd.Flags().BoolP("check", "c", false, "Check the installation and dependencies")
+	// configCmd.Flags().BoolP("install", "i", false, "Install the ook needed environment files")
+	// configCmd.Flags().BoolP("redo", "r", false, "Re-install the ook needed environment")
+	// configCmd.Flags().BoolP("uninstall", "u", false, "Uninstall the ook needed environment")
+	// configCmd.Flags().BoolP("check", "c", false, "Check the installation and dependencies")
 }
