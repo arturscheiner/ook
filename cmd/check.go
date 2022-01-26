@@ -5,6 +5,9 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
+	"io/ioutil"
+	"log"
 	"ook/koo"
 
 	"github.com/spf13/cobra"
@@ -66,7 +69,14 @@ func check_it() {
 	//c := make(chan string)
 
 	//go koo.Bar(-1, "executing")
+	files, err := ioutil.ReadDir("./.vagrant/machines/")
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	for _, f := range files {
+		fmt.Println(f.Name())
+	}
 	//koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'")
 	koo.OokSsh("vagrant", "test_vm2", "192.168.121.43", 22, "bash -c 'ls -la'")
 	//koo.SshTest("vagrant", "192.168.121.100", "bash -c '~/do_test'")

@@ -20,9 +20,17 @@ type OokLab struct {
 	Workers    string
 	Masters    string
 	Hosts      string
+	Ipas       string
+}
+
+type Vagrant struct {
+	Root     string
+	Machine  string
+	Provider string
 }
 
 type OokDir struct {
-	Home OokHome
-	Lab  OokLab
+	Home    OokHome
+	Lab     OokLab
+	Vagrant Vagrant
 }
