@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -15,6 +14,7 @@ import (
 	"github.com/melbahja/goph"
 	"github.com/schollz/progressbar/v3"
 	"golang.org/x/crypto/ssh"
+	"golang.org/x/crypto/ssh/knownhosts"
 )
 
 func CommandExists(cmd string) bool {
@@ -153,38 +153,33 @@ func Check_up() {
 }
 
 func SshTest(user string, server string, command string) {
-	authorizedKeysBytes, _ := ioutil.ReadFile("vagrant_public_key")
-	ssh.ParseAuthorizedKey(authorizedKeysBytes)
-	//if err != nil {
-	///	log.Printf("Failed to load authorized_keys, err: %v", err)
-	//}
+	host := server + ":22"
+	//user = "vagrant"
+	//pwd := "vagrant"
+	pKey := []byte("vagrant_private_key")
 
-	privkeyBytes, _ := ioutil.ReadFile("vagrant_private_key")
-	upkey, err := ssh.ParsePrivateKey(privkeyBytes)
+	var err error
+	var signer ssh.Signer
 
+	signer, err = ssh.ParsePrivateKey(pKey)
 	if err != nil {
-		log.Printf("Failed to load authorized_keys, err: %v", err)
+		fmt.Println(err.Error())
 	}
 
-	usigner, err := ssh.NewSignerFromKey(upkey)
+	var hostkeyCallback ssh.HostKeyCallback
+	hostkeyCallback, err = knownhosts.New("~/.ssh/known_hosts")
 	if err != nil {
-		log.Printf("Failed to create new signer, err: %v", err)
-	}
-	log.Printf("signer: %s", usigner)
-
-	//ucertSigner, err := ssh.NewPublicKey(pcert, usigner)
-
-	if err != nil {
-		log.Printf("Failed to create new signer, err: %v", err)
+		fmt.Println(err.Error())
 	}
 
 	sshConfig := &ssh.ClientConfig{
 		User:            user,
-		Auth:            []ssh.AuthMethod{ssh.PublicKeys(usigner)},
-		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		Auth:            []ssh.AuthMethod{ssh.PublicKeys(signer)},
+		HostKeyCallback: hostkeyCallback,
+		//HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
-	client, err := ssh.Dial("tcp", server+":22", sshConfig)
+	client, err := ssh.Dial("tcp", host, sshConfig)
 
 	if err != nil {
 		log.Fatalf("Failed to dial, err: %v", err)
