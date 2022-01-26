@@ -215,7 +215,7 @@ func VerifyHost(host string, remote net.Addr, key ssh.PublicKey) error {
 
 	// hostFound: is host in known hosts file.
 	// err: error if key not in known hosts file OR host in known hosts file but key changed!
-	hostFound, err := goph.CheckKnownHost(host, remote, key, "")
+	hostFound, err := goph.CheckKnownHost(host, remote, key, "known_hosts")
 
 	// Host in known hosts but key mismatch!
 	// Maybe because of MAN IN THE MIDDLE ATTACK!
