@@ -6,11 +6,15 @@ package cmd
 
 import (
 	"ook/koo"
+	"ook/ook"
 	"time"
 
 	"github.com/briandowns/spinner"
 	"github.com/spf13/cobra"
 )
+
+// Initialize variable for down command
+var down ook.Exec
 
 // downCmd represents the down command
 var downCmd = &cobra.Command{
@@ -24,7 +28,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		//koo.TestOut()
-		down()
+		down.Run("vagrant halt")
 	},
 }
 
@@ -42,7 +46,7 @@ func init() {
 	// downCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func down() {
+func do_down() {
 	s := spinner.New(spinner.CharSets[2], 100*time.Millisecond)
 	s.Suffix = " This may take some time..."
 	s.Start()

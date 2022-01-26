@@ -26,6 +26,7 @@ func CommandExists(cmd string) bool {
 
 func CheckErr(e error) {
 	if e != nil {
+		log.Fatal()
 		panic(e)
 	}
 }
