@@ -30,8 +30,10 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		rstdout, _ := cmd.Flags().GetBool("stdout")
-		up(rstdout)
+		//rstdout, _ := cmd.Flags().GetBool("stdout")
+		//up(rstdout)
+
+		koo.Execute("vagrant up")
 
 	},
 }

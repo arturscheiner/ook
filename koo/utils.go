@@ -3,12 +3,12 @@ package koo
 import (
 	"bufio"
 	"errors"
-	"fmt"
 	"os"
 	"os/exec"
 	"strings"
 	"syscall"
 
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
 
@@ -76,7 +76,8 @@ func HandleReader(reader *bufio.Reader) {
 		}
 
 		message := scanner.Text()
-
-		fmt.Println(message)
+		zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+		log.Print(message)
+		//fmt.Println(message)
 	}
 }
