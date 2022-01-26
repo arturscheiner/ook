@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net"
 	"os"
 	"os/exec"
@@ -15,6 +14,7 @@ import (
 	"github.com/janeczku/go-spinner"
 	"github.com/k0kubun/go-ansi"
 	"github.com/melbahja/goph"
+	"github.com/rs/zerolog/log"
 	"github.com/schollz/progressbar/v3"
 	"golang.org/x/crypto/ssh"
 )
@@ -26,7 +26,7 @@ func CommandExists(cmd string) bool {
 
 func CheckErr(e error) {
 	if e != nil {
-		log.Fatal()
+		log.Error().Msg("Error executing function!")
 		panic(e)
 	}
 }
