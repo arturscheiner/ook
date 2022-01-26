@@ -74,7 +74,7 @@ func check_it() {
 
 	hosts, _ := hostsfile.ParseHosts(dat, err)
 
-	fmt.Println(hosts)
+	fmt.Println(hosts["10.8.8.10"])
 	//go koo.Bar(-1, "executing")
 	files, err := ioutil.ReadDir("./.vagrant/machines/")
 	if err != nil {
