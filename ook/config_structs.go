@@ -7,7 +7,6 @@ import (
 type Config struct {
 	Fs  afero.Fs
 	Dir OokDir
-	Run
 }
 
 type OokDir struct {
