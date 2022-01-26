@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net"
@@ -249,4 +250,29 @@ func VerifyHost(host string, remote net.Addr, key ssh.PublicKey) error {
 
 	// Add the new host to known hosts file.
 	return goph.AddKnownHost(host, remote, key, "known_hosts")
+}
+
+func TestOut() {
+	// Replace `ls` (and its arguments) with something more interesting
+	cmd := exec.Command("vagrant", "halt")
+
+	// Create stdout, stderr streams of type io.Reader
+	stdout, err := cmd.StdoutPipe()
+	CheckErr(err)
+	stderr, err := cmd.StderrPipe()
+	CheckErr(err)
+
+	// Start command
+	err = cmd.Start()
+	CheckErr(err)
+
+	// Don't let main() exit before our command has finished running
+	defer cmd.Wait() // Doesn't block
+
+	// Non-blockingly echo command output to terminal
+	go io.Copy(os.Stdout, stdout)
+	go io.Copy(os.Stderr, stderr)
+
+	// I love Go's trivial concurrency :-D
+	fmt.Printf("Do other stuff here! No need to wait.\n\n")
 }
