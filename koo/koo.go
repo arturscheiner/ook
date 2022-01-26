@@ -79,18 +79,26 @@ func OpBar(fn func()) {
 	fmt.Println("\n ======= progress bar completed ==========\n")
 }
 
-func OokSsh(user string, password string, server string, command string) {
+func OokSsh(user string, password string, addr string, port uint, command string) {
 	// Start new ssh connection with private key.
 	//auth := goph.Password(password)
 
 	//goth.AddKnownHost("alpine",server,,"known_hosts")
 	// Start new ssh connection with private key.
-	auth, err := goph.Key("vagrant_private_key", "abcd")
+	auth, err := goph.Key("vagrant_private_key", "")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	client, err := goph.New(user, server, auth)
+	config := &goph.Config{
+		User:     user,
+		Addr:     addr,
+		Port:     port,
+		Auth:     auth,
+		Callback: VerifyHost,
+	}
+
+	client, err := goph.NewConn(config)
 	if err != nil {
 		log.Fatal(err)
 	}
