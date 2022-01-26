@@ -2,10 +2,12 @@ package ook
 
 import (
 	"encoding/base64"
+	"fmt"
 	"ook/koo"
 	"os"
 	"strings"
 
+	git "github.com/go-git/go-git/v5"
 	"github.com/spf13/afero"
 )
 
@@ -43,14 +45,14 @@ func (c *Config) handleInit() {
 
 	afero.WriteFile(c.Fs, "Vagrantfile", []byte(string(vagrantfile)), 0644)
 
-	c.CreateFiles(c.Fs)
+	c.CreateFiles()
 }
 
-func (c *Config) CreateFiles(fs afero.Fs) {
+func (c *Config) CreateFiles() {
 	dat, err := os.ReadFile(c.Dir.Home.Confrb)
 	koo.CheckErr(err)
 
-	afero.WriteFile(fs, c.Dir.Lab.Configfile, []byte(string(dat)), 0644)
+	afero.WriteFile(c.Fs, c.Dir.Lab.Configfile, []byte(string(dat)), 0644)
 }
 
 func (c *Config) GetVersion() string {
@@ -58,4 +60,40 @@ func (c *Config) GetVersion() string {
 	koo.CheckErr(err)
 
 	return strings.TrimSuffix(string(dat), "\n")
+}
+
+func (c *Config) handleInstall() {
+	// Clone the given repository to the given directory
+
+	tde, err := afero.DirExists(c.Fs, c.Dir.Home.Root)
+	koo.CheckErr(err)
+
+	if tde {
+		fmt.Println(c.Dir.Home.Root + " directory already exists!")
+		return
+	}
+	_, err = git.PlainClone(c.Dir.Home.Root, false, &git.CloneOptions{
+		URL:      "https://github.com/arturscheiner/.ook.git",
+		Progress: os.Stdout,
+	})
+
+	koo.CheckErr(err)
+	c.handleInstallCheck()
+}
+
+func (c *Config) handleInstallRedo() {
+	c.handleUninstall()
+	c.handleInstall()
+}
+
+func (c *Config) handleUninstall() {
+	err := c.Fs.RemoveAll(c.Dir.Home.Root)
+	koo.CheckErr(err)
+}
+
+func (c *Config) handleInstallCheck() {
+	ve := koo.CommandExists("vagrant")
+	if ve {
+		fmt.Println("vagrant is installed, check plugins for this system")
+	}
 }

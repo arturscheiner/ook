@@ -10,8 +10,19 @@ import (
 
 func (c *Config) Run(r string) {
 	c.Define()
-	c.handleInit()
 
+	switch r {
+	case "init":
+		c.handleInit()
+	case "install":
+		c.handleInstall()
+	case "redo":
+		c.handleInstallRedo()
+	case "unistall":
+		c.handleUninstall()
+	default:
+		return
+	}
 }
 
 func (c *Config) Define() *Config {
