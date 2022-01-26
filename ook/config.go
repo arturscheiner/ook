@@ -9,12 +9,8 @@ import (
 	"github.com/spf13/afero"
 )
 
-func (c *Config) Init() {
-	log.Info().Msg("Hellow Init")
-}
-
-func (c *Config) Install() {
-	log.Info().Msg("Hellow Init")
+func (c *Config) Run(r string) {
+	log.Info().Msg("Hellow " + r)
 }
 
 func (Ook *OokDir) Define() interface{} {
