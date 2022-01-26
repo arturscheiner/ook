@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"strings"
 
 	"github.com/jaytaylor/go-hostsfile"
 	"github.com/spf13/afero"
@@ -76,6 +77,10 @@ func check_it() {
 	host2ip := arrangeMap(hosts)
 	fmt.Println(hosts["10.8.8.10"])
 	fmt.Println(host2ip["kv-master-0"])
+
+	justString := strings.Join(host2ip["kv-master-0"], " ")
+	fmt.Println(justString)
+
 	//go koo.Bar(-1, "executing")
 	files, err := ioutil.ReadDir("./.vagrant/machines/")
 	if err != nil {
