@@ -14,6 +14,12 @@ import (
 
 func (c *Config) handleInit() {
 
+	_, err := afero.DirExists(c.Fs, c.Dir.Home.Root)
+	if err != nil {
+		fmt.Println("Needed files do not exist. I will download them and try to initialize your lab, again!")
+		c.handleConfigInstall()
+	}
+
 	c.Fs.Mkdir(c.Dir.Lab.Root, 0755)
 
 	dat, err := os.ReadFile(c.Dir.Home.Vagranfile)
