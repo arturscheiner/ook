@@ -11,6 +11,33 @@ import (
 
 func (c *Config) Run(r string) {
 	log.Info().Msg("Hellow " + r)
+
+}
+
+func (c *Config) Define() *Config {
+
+	userHomeDir, err := os.UserHomeDir()
+	koo.CheckErr(err)
+	c.Fs = afero.NewOsFs()
+	c.Dir.Home.Root = userHomeDir + "/.ook"
+	c.Dir.Home.Sh = c.Dir.Home.Root + "/lib/sh"
+	c.Dir.Home.Rb = c.Dir.Home.Root + "/lib/rb"
+	c.Dir.Home.Vagranfile = c.Dir.Home.Root + "/Vagrantfile"
+	c.Dir.Home.Confrb = c.Dir.Home.Root + "/conf.rb"
+	c.Dir.Home.Labrb = c.Dir.Home.Root + "/lib/rb/lab.rb"
+	c.Dir.Home.Master_sh = c.Dir.Home.Sh + "/master.sh"
+	c.Dir.Home.Worker_sh = c.Dir.Home.Sh + "/worker.sh"
+	c.Dir.Home.Scaler_sh = c.Dir.Home.Sh + "/scaler.sh"
+	c.Dir.Home.Common_sh = c.Dir.Home.Sh + "/common.sh"
+	c.Dir.Home.Version = c.Dir.Home.Root + "/VERSION"
+
+	c.Dir.Lab.Root = ".ook"
+	c.Dir.Lab.Configfile = c.Dir.Lab.Root + "/config.env"
+	c.Dir.Lab.Masters = c.Dir.Lab.Root + "/masters"
+	c.Dir.Lab.Workers = c.Dir.Lab.Root + "/workers"
+	c.Dir.Lab.Hosts = c.Dir.Lab.Root + "/hosts"
+
+	return c
 }
 
 func (Ook *OokDir) Define() interface{} {
