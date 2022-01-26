@@ -19,8 +19,7 @@ func (e *Exec) handleOutStream() {
 
 		e.Stream.Data = scanner.Text()
 		zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
-		log.Print(e.Stream.Data)
-		//fmt.Println(message)
+		log.Info().Msg(e.Stream.Data)
 	}
 }
 
@@ -37,8 +36,7 @@ func (e *Exec) handleErrStream() {
 
 		e.Stream.Data = scanner.Text()
 		zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
-		log.Print(e.Stream.Data)
-		//fmt.Println(message)
+		log.Error().Msg(e.Stream.Data)
 	}
 }
 
