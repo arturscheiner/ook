@@ -8,8 +8,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"ook/koo"
 
+	"github.com/jaytaylor/go-hostsfile"
+	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
 )
 
@@ -67,7 +68,13 @@ func check_it() {
 	//cmd.Wait()
 	//ookSsh("vagrant", "vagrant", "10.8.8.10", "/bin/bash")
 	//c := make(chan string)
+	AppFs := afero.NewOsFs()
 
+	dat, err := afero.ReadFile(AppFs, "./.ook/hosts")
+
+	hosts, _ := hostsfile.ParseHosts(dat, err)
+
+	fmt.Println(hosts)
 	//go koo.Bar(-1, "executing")
 	files, err := ioutil.ReadDir("./.vagrant/machines/")
 	if err != nil {
@@ -76,9 +83,10 @@ func check_it() {
 
 	for _, f := range files {
 		fmt.Println(f.Name())
+		//koo.OokSsh("vagrant", f.Name(), hostsfile.ParseHosts, 22, "bash -c 'ls -la'")
 	}
 	//koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'")
-	koo.OokSsh("vagrant", "test_vm2", "192.168.121.43", 22, "bash -c 'ls -la'")
+	//koo.OokSsh("vagrant", "test_vm2", "192.168.121.43", 22, "bash -c 'ls -la'")
 	//koo.SshTest("vagrant", "192.168.121.100", "bash -c '~/do_test'")
 	//
 	//
