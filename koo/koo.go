@@ -87,7 +87,7 @@ func OokSsh(user string, hostname string, addr string, port uint, command string
 	}
 	//goth.AddKnownHost("alpine",server,,"known_hosts")
 	// Start new ssh connection with private key.
-	auth, err := goph.Key(".vagrant/machines/"+hostname+"/libvirt/private_key", "")
+	auth, err := goph.Key("./.vagrant/machines/"+hostname+"/libvirt/private_key", "")
 	if err != nil {
 		log.Fatal(err)
 	}
