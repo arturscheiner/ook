@@ -238,5 +238,5 @@ func VerifyHost(host string, remote net.Addr, key ssh.PublicKey) error {
 	//}
 
 	// Add the new host to known hosts file.
-	return goph.AddKnownHost(host, remote, key, "")
+	return goph.AddKnownHost(host, remote, key, "known_hosts")
 }
