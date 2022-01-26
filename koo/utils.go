@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
-	"io"
 	"os"
 	"os/exec"
 	"strings"
@@ -67,7 +66,17 @@ func Execute(cmd string) (err error) {
 }
 
 func HandleReader(reader *bufio.Reader) {
-	if b, err := io.ReadAll(reader); err == nil {
-		fmt.Println(string(b))
+	scanner := bufio.NewScanner(reader)
+
+	for {
+		ok := scanner.Scan()
+
+		if !ok {
+			break
+		}
+
+		message := scanner.Text()
+
+		fmt.Println(message)
 	}
 }
