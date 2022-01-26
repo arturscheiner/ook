@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	git "github.com/go-git/go-git/v5"
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/afero"
 )
 
@@ -82,16 +83,19 @@ func (c *Config) handleInstall() {
 }
 
 func (c *Config) handleInstallRedo() {
+	log.Info().Msg("Handling Redo")
 	c.handleUninstall()
 	c.handleInstall()
 }
 
 func (c *Config) handleUninstall() {
+	log.Info().Msg("Handling Uninstall")
 	err := c.Fs.RemoveAll(c.Dir.Home.Root)
 	koo.CheckErr(err)
 }
 
 func (c *Config) handleInstallCheck() {
+	log.Info().Msg("Handling Check")
 	ve := koo.CommandExists("vagrant")
 	if ve {
 		fmt.Println("vagrant is installed, check plugins for this system")
