@@ -14,7 +14,6 @@ import (
 	"github.com/melbahja/goph"
 	"github.com/schollz/progressbar/v3"
 	"golang.org/x/crypto/ssh"
-	"golang.org/x/crypto/ssh/knownhosts"
 )
 
 func CommandExists(cmd string) bool {
@@ -166,17 +165,17 @@ func SshTest(user string, server string, command string) {
 		fmt.Println(err.Error())
 	}
 
-	var hostkeyCallback ssh.HostKeyCallback
-	hostkeyCallback, err = knownhosts.New("~/.ssh/known_hosts")
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	//var hostkeyCallback ssh.HostKeyCallback
+	//hostkeyCallback, err = knownhosts.New("~/.ssh/known_hosts")
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//}
 
 	sshConfig := &ssh.ClientConfig{
-		User:            user,
-		Auth:            []ssh.AuthMethod{ssh.PublicKeys(signer)},
-		HostKeyCallback: hostkeyCallback,
-		//HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		User: user,
+		Auth: []ssh.AuthMethod{ssh.PublicKeys(signer)},
+		//HostKeyCallback: hostkeyCallback,
+		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
 	client, err := ssh.Dial("tcp", host, sshConfig)
