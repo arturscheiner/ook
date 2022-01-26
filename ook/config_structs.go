@@ -7,7 +7,6 @@ import (
 type Config struct {
 	Fs  afero.Fs
 	Dir OokDir
-	Run Run
 }
 
 type OokDir struct {
@@ -43,9 +42,4 @@ type Vagrant struct {
 	Root     string
 	Machine  string
 	Provider string
-}
-
-type Run interface {
-	Init()
-	Install()
 }
