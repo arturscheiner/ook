@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"ook/koo"
 	"strings"
 
 	"github.com/jaytaylor/go-hostsfile"
@@ -89,7 +90,7 @@ func check_it() {
 
 	for _, f := range files {
 		fmt.Println(f.Name())
-		//koo.OokSsh("vagrant", f.Name(), host2ip[f.Name()], 22, "bash -c 'ls -la'")
+		koo.OokSsh("vagrant", f.Name(), strings.Join(host2ip[f.Name()], " "), 22, "bash -c 'ls -la'")
 	}
 	//koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'")
 	//koo.OokSsh("vagrant", "test_vm2", "192.168.121.43", 22, "bash -c 'ls -la'")
