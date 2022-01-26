@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net"
 	"os"
 	"os/exec"
 	"time"
@@ -155,7 +156,10 @@ func Check_up() {
 func SshTest(user string, server string, command string) {
 	authorizedKeysBytes, _ := ioutil.ReadFile("vagrant_private_key")
 	//pcert, _, _, _, err := ssh.ParseAuthorizedKey(authorizedKeysBytes)
+	na := net.Addr{}
 
+	na = "tcp"
+	na[1] = server + ":22"
 	host := server + ":22"
 	//user = "vagrant"
 	//pwd := "vagrant"
@@ -168,6 +172,8 @@ func SshTest(user string, server string, command string) {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+	//pukey, _ := ssh.NewPublicKey(signer)
+	//goph.AddKnownHost("alpine", server, pukey, "known_hosts")
 
 	//var hostkeyCallback ssh.HostKeyCallback
 	//hostkeyCallback, err = knownhosts.New("known_hosts")
@@ -176,10 +182,10 @@ func SshTest(user string, server string, command string) {
 	//}
 
 	sshConfig := &ssh.ClientConfig{
-		User: user,
-		Auth: []ssh.AuthMethod{ssh.PublicKeys(signer)},
-		//HostKeyCallback: hostkeyCallback,
-		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		User:            user,
+		Auth:            []ssh.AuthMethod{ssh.PublicKeys(signer)},
+		HostKeyCallback: VerifyHost,
+		//HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
 	client, err := ssh.Dial("tcp", host, sshConfig)
@@ -200,4 +206,40 @@ func SshTest(user string, server string, command string) {
 		log.Fatal("Failed to run: " + err.Error())
 	}
 	log.Println(b.String())
+}
+
+func VerifyHost(host string, remote net.Addr, key ssh.PublicKey) error {
+
+	//
+	// If you want to connect to new hosts.
+	// here your should check new connections public keys
+	// if the key not trusted you shuld return an error
+	//
+
+	// hostFound: is host in known hosts file.
+	// err: error if key not in known hosts file OR host in known hosts file but key changed!
+	hostFound, err := goph.CheckKnownHost(host, remote, key, "")
+
+	// Host in known hosts but key mismatch!
+	// Maybe because of MAN IN THE MIDDLE ATTACK!
+	if hostFound && err != nil {
+
+		return err
+	}
+
+	// handshake because public key already exists.
+	if hostFound && err == nil {
+
+		return nil
+	}
+
+	// Ask user to check if he trust the host public key.
+	//if askIsHostTrusted(host, key) == false {
+
+	// Make sure to return error on non trusted keys.
+	//	return errors.New("you typed no, aborted!")
+	//}
+
+	// Add the new host to known hosts file.
+	return goph.AddKnownHost(host, remote, key, "")
 }
