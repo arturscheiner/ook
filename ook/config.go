@@ -18,7 +18,7 @@ func (c *Config) Run(r string) {
 		c.handleConfigInstall()
 	case "redo":
 		c.handleConfigRedo()
-	case "unistall":
+	case "uninstall":
 		c.handleConfigUninstall()
 	case "inspect":
 		c.handleConfigInspect()
