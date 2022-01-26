@@ -5,9 +5,7 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
 	"ook/koo"
-	"os/exec"
 	"time"
 
 	"github.com/briandowns/spinner"
@@ -51,10 +49,10 @@ func down() {
 
 	//cmd.Stdout = os.Stdout
 	//time.Sleep(1000 * time.Millisecond)
-	out, err := exec.Command("vagrant", "halt").Output()
-	koo.CheckErr(err)
-
-	fmt.Println(string(out))
+	//out, err := exec.Command("vagrant", "halt").Output()
+	//koo.CheckErr(err)
+	koo.Execute("vagrant halt")
+	//fmt.Println(string(out))
 	//s := spinner.StartNew("This may take some time...")
 	//cmd.Stderr = os.Stderr
 	//err := cmd.Run()
