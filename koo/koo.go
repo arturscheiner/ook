@@ -26,7 +26,7 @@ func CommandExists(cmd string) bool {
 
 func CheckErr(e error) {
 	if e != nil {
-		log.Error().Msg("Error executing function!")
+		log.Error().Msg(e.Error())
 		panic(e)
 	}
 }
@@ -90,9 +90,7 @@ func OokSsh(user string, hostname string, addr string, port uint, command string
 	//goth.AddKnownHost("alpine",server,,"known_hosts")
 	// Start new ssh connection with private key.
 	auth, err := goph.Key("./.vagrant/machines/"+hostname+"/libvirt/private_key", "")
-	if err != nil {
-		log.Fatal(err)
-	}
+	CheckErr(err)
 
 	config := &goph.Config{
 		User:     user,
@@ -103,19 +101,14 @@ func OokSsh(user string, hostname string, addr string, port uint, command string
 	}
 
 	client, err := goph.NewConn(config)
-	if err != nil {
-		log.Fatal(err)
-	}
+	CheckErr(err)
 
 	// Defer closing the network connection.
 	defer client.Close()
 
 	// Execute your command.
 	out, err := client.Run(command)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	CheckErr(err)
 
 	// Get your output as []byte.
 	fmt.Println(string(out))
@@ -125,9 +118,7 @@ func OokSsh(user string, hostname string, addr string, port uint, command string
 func ReadFile(fn string, ln int32) (str string, err error) {
 
 	f, err := os.Open(fn)
-	if err != nil {
-		log.Fatalln(err)
-	}
+	CheckErr(err)
 	defer f.Close()
 
 	scanner := bufio.NewScanner(f)
@@ -138,9 +129,8 @@ func ReadFile(fn string, ln int32) (str string, err error) {
 		}
 		line++
 	}
-	if err := scanner.Err(); err != nil {
-		log.Fatalln(err)
-	}
+	CheckErr(scanner.Err())
+
 	return
 }
 
@@ -155,9 +145,7 @@ func Check_up() {
 	//f, _ := os.Create(".ook/stdout.log")
 
 	err := cmd.Run()
-	if err != nil {
-		log.Fatalf("cmd.Run() failed with %s\n", err)
-	}
+	CheckErr(err)
 
 	//io.Copy(io.MultiWriter(f, os.Stdout), stdout)
 	//cmd.Wait()
@@ -178,9 +166,7 @@ func SshTest(user string, server string, command string) {
 	var signer ssh.Signer
 
 	signer, err = ssh.ParsePrivateKey(pKey)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	CheckErr(err)
 	//pukey, _ := ssh.NewPublicKey(signer)
 	//goph.AddKnownHost("alpine", server, pukey, "known_hosts")
 
@@ -198,23 +184,16 @@ func SshTest(user string, server string, command string) {
 	}
 
 	client, err := ssh.Dial("tcp", host, sshConfig)
-
-	if err != nil {
-		log.Fatalf("Failed to dial, err: %v", err)
-	}
+	CheckErr(err)
 
 	session, err := client.NewSession()
-	if err != nil {
-		log.Fatal("Failed to create session: ", err)
-	}
+	CheckErr(err)
 	defer session.Close()
 
 	var b bytes.Buffer
 	session.Stdout = &b
-	if err := session.Run(command); err != nil {
-		log.Fatal("Failed to run: " + err.Error())
-	}
-	log.Println(b.String())
+	CheckErr(session.Run(command))
+
 }
 
 func VerifyHost(host string, remote net.Addr, key ssh.PublicKey) error {
