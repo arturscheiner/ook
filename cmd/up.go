@@ -7,6 +7,7 @@ package cmd
 import (
 	"fmt"
 	"ook/koo"
+	"ook/ook"
 
 	"os"
 	"os/exec"
@@ -17,6 +18,9 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
+
+// Initialize variable for down command
+var up ook.Exec
 
 // upCmd represents the up command
 var upCmd = &cobra.Command{
@@ -33,7 +37,8 @@ to quickly create a Cobra application.`,
 		//rstdout, _ := cmd.Flags().GetBool("stdout")
 		//up(rstdout)
 
-		koo.Execute("vagrant up")
+		//koo.Execute("vagrant up")
+		up.Run("vagrant up")
 
 	},
 }
@@ -52,7 +57,7 @@ func init() {
 	upCmd.Flags().BoolP("stdout", "s", false, "Show output messages when running")
 }
 
-func up(o bool) {
+func do_up(o bool) {
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	cmd := exec.Command("vagrant", "up")
 	if o {
