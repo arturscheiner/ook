@@ -7,6 +7,7 @@ package cmd
 import (
 	"ook/ook"
 
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 )
 
@@ -23,6 +24,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		log.Info().Msg("Unistall selected")
 		uninstall.Run("uninstall")
 	},
 }
