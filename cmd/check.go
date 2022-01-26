@@ -73,9 +73,9 @@ func check_it() {
 	dat, err := afero.ReadFile(AppFs, "./.ook/hosts")
 
 	hosts, _ := hostsfile.ParseHosts(dat, err)
-	hosts2 := arrangeMap(hosts)
+	host2ip := arrangeMap(hosts)
 	fmt.Println(hosts["10.8.8.10"])
-	fmt.Println(hosts2)
+	fmt.Println(host2ip["kv-master-0"])
 	//go koo.Bar(-1, "executing")
 	files, err := ioutil.ReadDir("./.vagrant/machines/")
 	if err != nil {
@@ -84,7 +84,7 @@ func check_it() {
 
 	for _, f := range files {
 		fmt.Println(f.Name())
-		//koo.OokSsh("vagrant", f.Name(), hostsfile.ParseHosts, 22, "bash -c 'ls -la'")
+		//koo.OokSsh("vagrant", f.Name(), host2ip[f.Name()], 22, "bash -c 'ls -la'")
 	}
 	//koo.OokSsh("vagrant", "vagrant", "10.8.8.10", "bash -c 'kubectl get nodes -o wide'")
 	//koo.OokSsh("vagrant", "test_vm2", "192.168.121.43", 22, "bash -c 'ls -la'")
