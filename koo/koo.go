@@ -160,7 +160,7 @@ func SshTest(user string, server string, command string) {
 	//}
 
 	privkeyBytes, _ := ioutil.ReadFile("vagrant_private_key")
-	upkey, err := ssh.ParseRawPrivateKey(privkeyBytes)
+	upkey, err := ssh.ParsePrivateKey(privkeyBytes)
 
 	if err != nil {
 		log.Printf("Failed to load authorized_keys, err: %v", err)
