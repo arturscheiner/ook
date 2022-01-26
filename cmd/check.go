@@ -73,8 +73,9 @@ func check_it() {
 	dat, err := afero.ReadFile(AppFs, "./.ook/hosts")
 
 	hosts, _ := hostsfile.ParseHosts(dat, err)
-
+	hosts2 := arrangeMap(hosts)
 	fmt.Println(hosts["10.8.8.10"])
+	fmt.Println(hosts2)
 	//go koo.Bar(-1, "executing")
 	files, err := ioutil.ReadDir("./.vagrant/machines/")
 	if err != nil {
@@ -91,4 +92,14 @@ func check_it() {
 	//
 	//
 	//s.Stop()
+}
+
+func arrangeMap(oldMap map[string][]string) map[string][]string {
+	newMap := make(map[string][]string)
+	for k, v := range oldMap {
+		for _, val := range v {
+			newMap[val] = append(newMap[val], k)
+		}
+	}
+	return newMap
 }
