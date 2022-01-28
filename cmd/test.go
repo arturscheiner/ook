@@ -91,6 +91,6 @@ func test() {
 	fmt.Printf("value: `%s`\n", f.GetValue())
 	f.SetValue("I am the UPDATED value.")
 	fmt.Printf("value: `%s`\n", f.GetValue())
-	f.SetFieldValue("volume", "I am the new volume value")
+	f.SetFieldValue("volume:", "I am the new volume value")
 	fmt.Printf("volume: `%s`\n", f.GetVolume())
 }
