@@ -6,6 +6,7 @@ package cmd
 
 import (
 	"fmt"
+	"reflect"
 
 	"github.com/spf13/cobra"
 )
@@ -41,20 +42,24 @@ func init() {
 
 // Define an interface that is exported by your package.
 type Foo interface {
-	GetValue() string  // A function that'll return the value initialized with a default.
+	GetValue() string // A function that'll return the value initialized with a default.
+	GetVolume() string
 	SetValue(v string) // A function that can update the default value.
+	SetFieldValue(f string, v string)
 }
 
 // Define a struct type that is not exported by your package.
 type foo struct {
-	value string
+	value  string
+	volume string
 }
 
 // A factory method to initialize an instance of `foo`,
 // the unexported struct, with a default value.
 func NewFoo() Foo {
 	return &foo{
-		value: "I am the DEFAULT value.",
+		value:  "I am the DEFAULT value.",
+		volume: "I am the volume.",
 	}
 }
 
@@ -64,10 +69,20 @@ func (f *foo) GetValue() string {
 	return f.value
 }
 
+// Implementation of the interface's `GetValue`
+// for struct `foo`.
+func (f *foo) GetVolume() string {
+	return f.volume
+}
+
 // Implementation of the interface's `SetValue`
 // for struct `foo`.
 func (f *foo) SetValue(v string) {
 	f.value = v
+}
+
+func (foo *foo) SetFieldValue(f string, v string) {
+	reflect.ValueOf(&foo).Elem().FieldByName(f).SetString(v)
 }
 
 func test() {
@@ -76,4 +91,6 @@ func test() {
 	fmt.Printf("value: `%s`\n", f.GetValue())
 	f.SetValue("I am the UPDATED value.")
 	fmt.Printf("value: `%s`\n", f.GetValue())
+	f.SetFieldValue("volume", "I am the new volume value")
+	fmt.Printf("volume: `%s`\n", f.GetVolume())
 }
