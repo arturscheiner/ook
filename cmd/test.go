@@ -82,7 +82,7 @@ func (f *foo) SetValue(v string) {
 }
 
 func (foo *foo) SetFieldValue(f string, v string) {
-	reflect.ValueOf(&foo).Elem().FieldByName(f).SetString(v)
+	reflect.ValueOf(foo).Elem().FieldByName(f).SetString(v)
 }
 
 func test() {
